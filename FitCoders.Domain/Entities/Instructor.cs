@@ -11,6 +11,7 @@ namespace FitCoders.Domain.Entities
 {
     public class Instructor : BaseEntity
     {
+        //TODO: Implement relation with members that are being privately coached (1:n)        
         public int InstructorId { get; private set; }
         public string Name { get; private set; }
         public string Cpf { get; private set; }

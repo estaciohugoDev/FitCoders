@@ -5,8 +5,6 @@ namespace FitCoders.Domain;
 
 public abstract class BaseEntity
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; protected set; }
     public string? CreatedBy { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
