@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FitCoders.Application.Entities;
+using FitCoders.Domain;
 
 namespace FitCoders.Application.Repositories.Base
 {
@@ -11,14 +11,14 @@ namespace FitCoders.Application.Repositories.Base
     {
         Task<IReadOnlyList<T>> GetAllAsync();
         Task<IReadOnlyList<T>> GetAsync(Expression<Func<T,bool>> predicate);
-        Task<IReadOnlyList<T>> GetAsync(Expression<Func<T,bool>> predicated = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            string includeString = null,
+        Task<IReadOnlyList<T>> GetAsync(Expression<Func<T,bool>>? predicated,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy,
+            string? includeString,
             bool disableTracking = true);
 
-        Task<IReadOnlyList<T>> GetAsync (Expression<Func<T,bool>> predicate = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            List<Expression<Func<T,object>>> includes = null,
+        Task<IReadOnlyList<T>> GetAsync (Expression<Func<T,bool>>? predicate,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy,
+            List<Expression<Func<T,object>>>? includes,
             bool disableTracking = true);
 
         Task<T> GetByIdAsync(int id);
