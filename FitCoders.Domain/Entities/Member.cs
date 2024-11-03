@@ -1,12 +1,10 @@
 using FitCoders.Domain.Entities.Base;
 using FitCoders.Domain.Enums;
-using FitCoders.Domain.Utils;
 
 namespace FitCoders.Domain.Entities
 {
     public class Member : BaseEntity
     {
-        //TODO: Implement workout routine (exercise list) and if member hired private coaching (by an instructor)
         public string Name { get; private set; }
         public string Cpf { get; private set; }
         public string Email { get; private set; }
@@ -16,18 +14,45 @@ namespace FitCoders.Domain.Entities
         public Membership MemberPlan { get; private set; }
         public DateOnly RenewalDate { get; private set; }
         public bool IsMembershipActive { get; private set; }
+        public bool IsCoached { get; private set; }
+        public Instructor? Coach { get; private set; }
+        public Workout? Workout { get; private set; }
 
-        public Member(Guid id, string name, string cpf, string email, decimal? weight, DateTime dob, Membership plan) : base(id)
+        public Member(int id, string name, string cpf, string email, decimal? weight, DateTime dob, Membership plan, bool isCoached, Workout workout) : base(id)
         {
             Name = name;
             Cpf = cpf;
             Email = email;
-            Age = DateUtils.CalculateAge(dob);
-            Weight = weight;
             DateOfBirth = DateOnly.FromDateTime(dob);
-            RenewalDate = DateOnly.FromDateTime(DateUtils.CalculateRenewal(plan));
+            Age = CalculateAge(dob);
+            RenewalDate = DateOnly.FromDateTime(CalculateRenewal(plan));
+            Weight = weight;
             MemberPlan = plan;
             IsMembershipActive = true;
+            IsCoached = isCoached;
+            Workout = workout;
+        }
+
+        protected static int CalculateAge(DateTime date)
+        {
+            int age = DateTime.Now.Year - date.Year;
+            if (DateTime.Now.Year < date.DayOfYear)
+                age--;
+            return age;
+        }
+
+        protected static DateTime CalculateRenewal(Membership plan)
+        {
+            var today = DateTime.Today;
+
+            return plan switch
+            {
+                Membership.Monthly => today.AddMonths(1),
+                Membership.Quarterly => today.AddMonths(3),
+                Membership.Semiannual => today.AddMonths(6),
+                Membership.Annual => today.AddYears(1),
+                _ => throw new ArgumentException("Invalid Membership plan."),
+            };
         }
     }
 }
