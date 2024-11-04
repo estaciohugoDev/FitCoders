@@ -15,11 +15,11 @@ namespace FitCoders.Domain.Entities
         public DateOnly RenewalDate { get; private set; }
         public bool IsMembershipActive { get; private set; }
         public bool IsCoached { get; private set; }
-        public Instructor? Coach { get; private set; }
+        public Instructor? Instructor { get; private set; }
         public Workout? Workout { get; private set; }
         public Gym Gym { get; private set; }
 
-        public Member(int id, string name, string cpf, string email, Gym gym , DateTime dob, Membership plan, bool isCoached, decimal? weight ,Instructor? coach ,Workout? workout) : base(id)
+        public Member(int id, string name, string cpf, string email, Gym gym , DateTime dob, Membership plan, bool isCoached, decimal? weight ,Instructor? instructor ,Workout? workout) : base(id)
         {
             Name = name;
             Cpf = cpf;
@@ -30,21 +30,21 @@ namespace FitCoders.Domain.Entities
             Weight = weight;
             MemberPlan = plan;
             IsMembershipActive = true;
-            Coach = coach;
+            Instructor = instructor;
             IsCoached = isCoached;
             Workout = workout;
             Gym = gym;
         }
 
-        void AddCoach(Instructor coach)
+        void AddCoach(Instructor instructor)
         {
-            Coach = coach;
+            Instructor = instructor;
             IsCoached = true;
         }
 
         void RemoveCoach()
         {
-            Coach = null;
+            Instructor = null;
             IsCoached = false;
         }
 
