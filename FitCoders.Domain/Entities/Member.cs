@@ -3,7 +3,7 @@ using FitCoders.Domain.Enums;
 
 namespace FitCoders.Domain.Entities
 {
-    public class Member : BaseEntity
+    public sealed class Member : BaseEntity
     {
         public string Name { get; private set; }
         public string Cpf { get; private set; }
@@ -17,8 +17,9 @@ namespace FitCoders.Domain.Entities
         public bool IsCoached { get; private set; }
         public Instructor? Coach { get; private set; }
         public Workout? Workout { get; private set; }
+        public Gym Gym { get; private set; }
 
-        public Member(int id, string name, string cpf, string email, decimal? weight, DateTime dob, Membership plan, bool isCoached, Workout workout) : base(id)
+        public Member(int id, string name, string cpf, string email, Gym gym , DateTime dob, Membership plan, bool isCoached, decimal? weight ,Instructor? coach ,Workout? workout) : base(id)
         {
             Name = name;
             Cpf = cpf;
@@ -29,11 +30,25 @@ namespace FitCoders.Domain.Entities
             Weight = weight;
             MemberPlan = plan;
             IsMembershipActive = true;
+            Coach = coach;
             IsCoached = isCoached;
             Workout = workout;
+            Gym = gym;
         }
 
-        protected static int CalculateAge(DateTime date)
+        void AddCoach(Instructor coach)
+        {
+            Coach = coach;
+            IsCoached = true;
+        }
+
+        void RemoveCoach()
+        {
+            Coach = null;
+            IsCoached = false;
+        }
+
+        static int CalculateAge(DateTime date)
         {
             int age = DateTime.Now.Year - date.Year;
             if (DateTime.Now.Year < date.DayOfYear)
@@ -41,7 +56,7 @@ namespace FitCoders.Domain.Entities
             return age;
         }
 
-        protected static DateTime CalculateRenewal(Membership plan)
+        static DateTime CalculateRenewal(Membership plan)
         {
             var today = DateTime.Today;
 

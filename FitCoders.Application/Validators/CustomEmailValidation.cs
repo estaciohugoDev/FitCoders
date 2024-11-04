@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace FitCoders.Domain.Utils
 {
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class CustomEmailValidation : ValidationAttribute
     {
         public static bool IsValid(string email)

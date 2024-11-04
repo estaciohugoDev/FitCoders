@@ -7,7 +7,7 @@ using FitCoders.Domain.Entities.Base;
 namespace FitCoders.Domain.Entities
 {
     //TODO: Add a URL link (in the frontend) redirecting to a video showcasing the exercise execution.
-    public class Exercise : BaseEntity
+    public sealed class Exercise : BaseEntity
     {
         public Exercise(int id, string name, int sets, int reps, int rest) :base(id)
         {

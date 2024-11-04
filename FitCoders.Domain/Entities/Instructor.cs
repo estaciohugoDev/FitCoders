@@ -10,18 +10,22 @@ namespace FitCoders.Domain.Entities
         public string Email { get; private set; }
         public InstructorShift Shift { get; private set; }
         public List<Member>? Clients { get; private set; } = [];
-
-        public Instructor(int id, string name, string cpf, string email, InstructorShift shift) :base(id)
+        public Gym Gym { get; private set; }
+        public Instructor(int id, string name, string cpf, string email, InstructorShift shift, Gym gym) :base(id)
         {
             Name = name;
             Cpf = cpf;
             Email = email;
             Shift = shift;
+            Gym = gym;
         }
-
-        public void AddClient(Member client)
+        void AddClient(Member client)
         {
             Clients!.Add(client);
+        }
+        void RemoveClient(Member client)
+        {
+            Clients!.Remove(client);
         }
     }
 }

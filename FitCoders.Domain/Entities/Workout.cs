@@ -7,7 +7,7 @@ using FitCoders.Domain.Enums;
 
 namespace FitCoders.Domain.Entities
 {
-    public class Workout : BaseEntity
+    public sealed class Workout : BaseEntity
     {
         public Workout(int id, string name, List<Exercise> exercises, WorkoutType type) : base(id)
         {
@@ -19,5 +19,15 @@ namespace FitCoders.Domain.Entities
         public string Name { get; private set; }
         public List<Exercise> Exercises { get; private set; }
         public WorkoutType Type { get; private set; }
+
+        void AddExercise (Exercise exercise)
+        {
+            Exercises.Add(exercise);
+        }
+
+        void DeleteExercise(Exercise exercise)
+        {
+            Exercises.Remove(exercise);
+        }
     }
 }
