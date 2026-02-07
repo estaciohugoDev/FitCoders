@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitCoders.Application", "Fi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitCoders.Domain", "FitCoders.Domain\FitCoders.Domain.csproj", "{1AA88133-3C22-4CEF-818F-550E79658EBE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitCoders.Infrastructure", "FitCoders.Infrastructure\FitCoders.Infrastructure.csproj", "{CA53C3F1-4FCF-4256-AAC3-868367214CDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{1AA88133-3C22-4CEF-818F-550E79658EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AA88133-3C22-4CEF-818F-550E79658EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AA88133-3C22-4CEF-818F-550E79658EBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA53C3F1-4FCF-4256-AAC3-868367214CDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA53C3F1-4FCF-4256-AAC3-868367214CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA53C3F1-4FCF-4256-AAC3-868367214CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA53C3F1-4FCF-4256-AAC3-868367214CDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
