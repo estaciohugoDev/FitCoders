@@ -8,18 +8,17 @@ namespace FitCoders.Domain.Entities
         public string Name { get; private set; }
         public string Cpf { get; private set; }
         public string Email { get; private set; }
-        public decimal? Weight { get; private set; }
+        public decimal Weight { get; private set; }
         public int Age { get; private set; }
         public DateOnly DateOfBirth { get; private set; }
-        public Membership MemberPlan { get; private set; }
+        public Membership MembershipPlan { get; private set; }
         public DateOnly RenewalDate { get; private set; }
         public bool IsMembershipActive { get; private set; }
         public bool IsCoached { get; private set; }
-        public Instructor? Instructor { get; private set; }
+        public Instructor? Instructor { get; private set; } = null;
         public Workout? Workout { get; private set; }
-        public Gym Gym { get; private set; }
 
-        public Member(int id, string name, string cpf, string email, Gym gym , DateTime dob, Membership plan, bool isCoached, decimal? weight ,Instructor? instructor ,Workout? workout) : base(id)
+        public Member(int id, string name, string cpf, string email , DateTime dob, Membership plan, bool isCoached, decimal weight ,Instructor? instructor ,Workout? workout) : base(id)
         {
             Name = name;
             Cpf = cpf;
@@ -28,21 +27,20 @@ namespace FitCoders.Domain.Entities
             Age = CalculateAge(dob);
             RenewalDate = DateOnly.FromDateTime(CalculateRenewal(plan));
             Weight = weight;
-            MemberPlan = plan;
+            MembershipPlan = plan;
             IsMembershipActive = true;
             Instructor = instructor;
             IsCoached = isCoached;
             Workout = workout;
-            Gym = gym;
         }
 
-        void AddCoach(Instructor instructor)
+        void AddInstructor(Instructor instructor)
         {
             Instructor = instructor;
             IsCoached = true;
         }
 
-        void RemoveCoach()
+        void RemoveInstructor()
         {
             Instructor = null;
             IsCoached = false;

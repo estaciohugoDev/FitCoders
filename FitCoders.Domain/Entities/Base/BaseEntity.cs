@@ -23,6 +23,11 @@ public abstract class BaseEntity : IEquatable<BaseEntity>
         return !(first == second);
     }
 
+    public int GetId()
+    {
+        return Id;
+    }
+
     public bool Equals(BaseEntity? other)
     {
         if(other is null) return false;

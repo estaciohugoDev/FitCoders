@@ -14,7 +14,7 @@ namespace FitCoders.Infrastructure.Context
         {
             var config = new ConfigurationBuilder().SetBasePath(Path.Combine(Directory.GetCurrentDirectory(),"../FitCoders.WebApi"))
                 .AddJsonFile("appsettings.json", optional: false)
-                .AddJsonFile($"appsettings.Development.json", optional: true)
+                .AddJsonFile($"appsettings.Development.json", optional: true) 
                 .Build();
 
             var connString = config.GetConnectionString("DefaultConnection");
