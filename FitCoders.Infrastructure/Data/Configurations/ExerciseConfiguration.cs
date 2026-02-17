@@ -24,15 +24,15 @@ namespace FitCoders.Infrastructure.Data.Configurations
 
             builder.Property(e => e.Sets)
                 .IsRequired()
-                .HasColumnType("int");
+                .HasColumnType("smallint");
 
             builder.Property(e => e.Reps)
                 .IsRequired()
-                .HasColumnType("int");
+                .HasColumnType("smallint");
 
             builder.Property(e => e.Rest)
                 .IsRequired()
-                .HasColumnType("int");
+                .HasColumnType("smallint");
 
             builder.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
