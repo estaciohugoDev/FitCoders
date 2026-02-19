@@ -12,7 +12,7 @@ namespace FitCoders.Domain.Entities
 
         private readonly List<Member> _clients = new();
         public IReadOnlyCollection<Member> Clients => _clients.AsReadOnly();
-        public Instructor(int id, string name, string cpf, string email, InstructorShift shift) :base(id)
+        public Instructor(Guid id, string name, string cpf, string email, InstructorShift shift) :base(id)
         {
             Name = name;
             Cpf = cpf;
@@ -22,6 +22,8 @@ namespace FitCoders.Domain.Entities
         void AddClient(Member client)
         {
             ArgumentNullException.ThrowIfNull(client);
+
+            if (_clients.Any(c => c.Id == client.Id)) throw new InvalidOperationException($"Client already assigned to Instructor {Name}.");
 
             _clients.Add(client);
         }

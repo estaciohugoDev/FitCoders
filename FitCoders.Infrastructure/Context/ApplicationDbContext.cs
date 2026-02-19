@@ -1,6 +1,7 @@
-﻿using System.Reflection;
-using FitCoders.Domain.Entities;
+﻿using FitCoders.Domain.Entities;
+using FitCoders.Domain.Entities.Base;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace FitCoders.Infrastructure.Context;
 
@@ -9,7 +10,6 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options){}
 
     public DbSet<Exercise> Exercises { get; set; }
-    public DbSet<Gym> Gym { get; set; }
     public DbSet<Instructor> Instructor { get; set; }
     public DbSet<Member> Member { get; set; }
     public DbSet<Workout> Workout { get; set; }
@@ -20,6 +20,24 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); 
         ConfigureForMySql(modelBuilder);
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+        {
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    entry.Entity.CreatedAt = DateTime.UtcNow;
+                    entry.Entity.UpdatedAt = DateTime.UtcNow;
+                    break;
+                case EntityState.Modified:
+                    entry.Entity.UpdatedAt = DateTime.UtcNow;
+                    break;
+            }
+        }
+        return base.SaveChangesAsync(cancellationToken);
     }
 
     private static void ConfigureForMySql(ModelBuilder modelBuilder) 

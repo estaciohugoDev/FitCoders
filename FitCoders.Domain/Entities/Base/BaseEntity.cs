@@ -3,13 +3,13 @@
 public abstract class BaseEntity : IEquatable<BaseEntity>
 {
     //Private init > property value is initialized as soon and only when its created, enforces immutability.
-    protected int Id { get; private init; }
+    public Guid Id { get; private init; }
     public string? CreatedBy { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public string? UpdatedBy { get; set; }
     public DateTime? UpdatedAt { get; set; }
-
-    protected BaseEntity(int id)
+    protected BaseEntity() { }
+    protected BaseEntity(Guid id)
     {
         Id = id;
     }
@@ -21,11 +21,6 @@ public abstract class BaseEntity : IEquatable<BaseEntity>
     public static bool operator !=(BaseEntity? first, BaseEntity? second)
     {
         return !(first == second);
-    }
-
-    public int GetId()
-    {
-        return Id;
     }
 
     public bool Equals(BaseEntity? other)

@@ -15,9 +15,9 @@ namespace FitCoders.Infrastructure.Data.Configurations
         {
             builder.ToTable("Workouts");
 
-            builder.HasKey(e => e.GetId());
+            builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.GetId())
+            builder.Property(e => e.Id)
                 .HasColumnType("char(36)")
                 .HasConversion<Guid>()
                 .IsRequired();
@@ -33,11 +33,18 @@ namespace FitCoders.Infrastructure.Data.Configurations
                 .HasMaxLength(40)
                 .IsRequired();
 
-            builder.Metadata.FindNavigation(nameof(Workout.Exercises))!
-                .SetField("_exercises");
+            builder.Property<Guid>("MemberId")
+                .HasColumnType("char(36)")
+                .IsRequired();
 
-            builder.Metadata.FindNavigation(nameof(Workout.Exercises))!
-                .SetPropertyAccessMode(PropertyAccessMode.Field);
+            builder.HasOne(w => w.Member)
+                .WithMany(m => m.Workouts)
+                .HasForeignKey(w => w.MemberId)
+                .IsRequired() 
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasIndex("MemberId")
+                .HasDatabaseName("IX_Workouts_MemberId");
 
             builder.HasMany(w => w.Exercises)
                 .WithMany() // Exercise não tem referência de volta
@@ -64,10 +71,12 @@ namespace FitCoders.Infrastructure.Data.Configurations
                     });
 
             builder.Property(i => i.CreatedAt)
+                .HasColumnType("datetime")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .ValueGeneratedOnAdd();
 
             builder.Property(i => i.UpdatedAt)
+                .HasColumnType("datetime")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
                 .ValueGeneratedOnAddOrUpdate();
 

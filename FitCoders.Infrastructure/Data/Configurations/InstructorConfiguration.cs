@@ -15,9 +15,9 @@ namespace FitCoders.Infrastructure.Data.Configurations
         {
             builder.ToTable("Instructors");
 
-            builder.HasKey(e => e.GetId());
+            builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.GetId())
+            builder.Property(e => e.Id)
                 .HasColumnType("char(36)")
                 .HasConversion<Guid>()
                 .IsRequired();
@@ -44,16 +44,19 @@ namespace FitCoders.Infrastructure.Data.Configurations
                 .HasColumnType("varchar(20)")
                 .HasMaxLength(20);
 
-            builder.HasMany("_clients")
-                .WithOne()
-                .HasForeignKey("InstructorId")
+            builder.HasMany(e => e.Clients)
+                .WithOne(e => e.Instructor)
+                .HasForeignKey(e => e.InstructorId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder.Property(i => i.CreatedAt)
+                .HasColumnType("datetime")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .ValueGeneratedOnAdd();
 
             builder.Property(i => i.UpdatedAt)
+                .HasColumnType("datetime")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
                 .ValueGeneratedOnAddOrUpdate();
 

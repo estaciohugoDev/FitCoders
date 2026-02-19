@@ -15,8 +15,8 @@ namespace FitCoders.Domain.Entities
         public List<Instructor>? Instructors { get; private set; } = [];
         public List<Modality> Modalities { get; private set; } = [Modality.WeightTraining,Modality.CrossFit,Modality.Muaythai];
 
-        public Gym(int id) : base(id) {}
-        public Gym(int id, string name, List<Instructor>? instructors) : base(id)
+        public Gym(Guid id) : base(id) {}
+        public Gym(Guid id, string name, List<Instructor>? instructors) : base(id)
         {
             Name = name;
             Instructors = instructors;

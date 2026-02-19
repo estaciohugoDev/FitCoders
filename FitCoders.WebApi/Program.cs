@@ -1,3 +1,4 @@
+using FitCoders.Infrastructure;
 using FitCoders.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         ServerVersion.AutoDetect(connString),
         sqlOptions =>
         {
-            sqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
+            sqlOptions.MigrationsAssembly("FitCoders.Infrastructure");
             sqlOptions.EnableRetryOnFailure(
                 maxRetryCount: 5,
                 maxRetryDelay: TimeSpan.FromSeconds(30),
@@ -107,4 +108,12 @@ Console.WriteLine("🚀 FitCoders API initiating...");
 Console.WriteLine($"📊 Environment: {app.Environment.EnvironmentName}");
 Console.WriteLine($"🔗 MySQL: {connString!.Split(';')[0]}...");
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    await DbSeeder.SeedAsync(context);
+}
+
 app.Run();
+

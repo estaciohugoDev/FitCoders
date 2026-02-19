@@ -9,7 +9,7 @@ namespace FitCoders.Domain.Entities
     //TODO: Add a URL link (in the frontend) redirecting to a video showcasing the exercise execution.
     public sealed class Exercise : BaseEntity
     {
-        public Exercise(int id, string name, int sets, int reps, int rest) :base(id)
+        public Exercise(Guid id, string name, int sets, int reps, int rest) :base(id)
         {
             Name = name;
             Sets = sets;

@@ -9,26 +9,37 @@ namespace FitCoders.Domain.Entities
 {
     public sealed class Workout : BaseEntity
     {
-        public Workout(int id, string name, WorkoutType type) : base(id)
-        {
-            Name = name;
-            Type = type;
-        }
 
         public string Name { get; private set; }
         private readonly List<Exercise> _exercises = new();
         public IReadOnlyCollection<Exercise> Exercises => _exercises.AsReadOnly();
         public WorkoutType Type { get; private set; }
+        public Guid MemberId { get; private set; }
+        public Member Member { get; private set; }
+        private Workout() { }
+        public Workout(Guid id, string name, WorkoutType type, Member member) : base(id)
+        {
+            Name = name;
+            Type = type;
+            SetMember(member);
+        }
 
-        internal void AddExercise (Exercise exercise)
+
+        public void AddExercise (Exercise exercise) 
         {
             ArgumentNullException.ThrowIfNull(exercise);
             _exercises.Add(exercise);
         }
 
-        internal void DeleteExercise(Exercise exercise)
+        public void DeleteExercise(Exercise exercise)
         {
             _exercises.Remove(exercise);
+        }
+        
+        private void SetMember(Member member)
+        {
+            Member = member ?? throw new ArgumentNullException(nameof(member));
+            MemberId = member.Id;
         }
     }
 }
