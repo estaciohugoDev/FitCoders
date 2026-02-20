@@ -108,12 +108,5 @@ Console.WriteLine("🚀 FitCoders API initiating...");
 Console.WriteLine($"📊 Environment: {app.Environment.EnvironmentName}");
 Console.WriteLine($"🔗 MySQL: {connString!.Split(';')[0]}...");
 
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-    await DbSeeder.SeedAsync(context);
-}
-
 app.Run();
 
